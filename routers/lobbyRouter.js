@@ -1,11 +1,12 @@
 const express = require('express')
 const lobbyController = require('./../controllers/lobbyController')
+const authController = require('./../controllers/authController')
 
 const router = express.Router()
 
 router.
     route('/')
-    .get(lobbyController.getAllLobbies)
+    .get(authController.protect, lobbyController.getAllLobbies)
     .post(lobbyController.createLobby)
 
 router.
@@ -14,6 +15,6 @@ router.
     .patch(lobbyController.updateLobby)
     .delete(lobbyController.deleteLobby)
 
-router.post('/join', lobbyController.joinLobby)
+router.post('/:id/join', lobbyController.joinLobby)
 
 module.exports = router
