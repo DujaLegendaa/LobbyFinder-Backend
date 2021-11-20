@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.
     route('/')
-    .get(gameController.getAllGame)
+    .get(gameController.getAllGames)
     .post(gameController.createGame)
 
 router.
@@ -13,3 +13,5 @@ router.
     .get(gameController.getGame)
     .patch(gameController.updateGame)
     .delete(gameController.deleteGame)
+
+module.exports = router

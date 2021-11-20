@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.
     route('/')
-    .get(lobbyController.getAllLobbbies)
+    .get(lobbyController.getAllLobbies)
     .post(lobbyController.createLobby)
 
 router.
@@ -13,3 +13,7 @@ router.
     .get(lobbyController.getLobby)
     .patch(lobbyController.updateLobby)
     .delete(lobbyController.deleteLobby)
+
+router.post('/join', lobbyController.joinLobby)
+
+module.exports = router

@@ -12,7 +12,7 @@ if(process.env.NODE_ENV == 'development')
 app.use(express.json())
 
 app.use('/api/v1/users', userRouter)
-app.use('/api/v1/lobby', lobbyRouter)
-app.use('/api/v1/game', gameRouter)
+app.use('/api/v1/lobbies', lobbyRouter)
+app.use('/api/v1/games', gameRouter)
 
 module.exports = app

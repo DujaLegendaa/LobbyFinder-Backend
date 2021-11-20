@@ -1,15 +1,26 @@
 const AppError = require('./../utils/AppError')
 const catchAsync = require('./../utils/catchAsync')
+const ApiFeatures = require('./../utils/apiFeatures')
+
+exports.getAll = Model => catchAsync(async (req, res) => {
+    const features = new ApiFeatures(Model.find(), req.body)
+    const docs = await features.query
+
+    res.status(200).json({
+        status: 'success',
+        data: {docs}
+    })
+})
 
 exports.createOne = Model => catchAsync(async (req, res, next) => {
     const newDoc = await Model.create(req.body)
     res.status(201).json({
-        status: 'sucess',
+        status: 'success',
         data: {newDoc}
     })
 })
 
-exports.getOne = Model => catchAsync(async (req, res) => {
+exports.getOne = Model => catchAsync(async (req, res, next) => {
     const doc = await Model.findById(req.params.id)
 
     if(!doc)
@@ -22,7 +33,7 @@ exports.getOne = Model => catchAsync(async (req, res) => {
 })
 
 
-exports.updateOne = Model => catchAsync(async (req, res) => {
+exports.updateOne = Model => catchAsync(async (req, res, next) => {
     const updatedDoc = await Model.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true})
 
     if(!updatedDoc)
