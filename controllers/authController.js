@@ -15,7 +15,7 @@ module.exports.signup = catchAsync(async (req, res, next) => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        passwordConfirm: req.body.passwordConfirm
+        passwordConfirm: req.body.passwordConfirm,
     })
 
     const token = signToken(newUser._id)
@@ -67,6 +67,14 @@ module.exports.protect = catchAsync(async (req, res, next) => {
     next()
 })
 
+module.exports.restrictToRole = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role))
+            next(new AppError('You do not have permission to access this route'))
+
+        next()
+    }
+}
 
 module.exports.forgotPassword = catchAsync(async (req, res, next) => {
     const user = User.findOne({email: req.body.email})

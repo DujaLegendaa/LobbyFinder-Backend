@@ -7,14 +7,14 @@ const router = express.Router()
 router.
     route('/')
     .get(authController.protect, lobbyController.getAllLobbies)
-    .post(lobbyController.createLobby)
+    .post(authController.protect, lobbyController.createLobby)
 
 router.
     route('/:id')
-    .get(lobbyController.getLobby)
-    .patch(lobbyController.updateLobby)
-    .delete(lobbyController.deleteLobby)
+    .get(authController.protect, lobbyController.getLobby)
+    .patch(authController.protect, lobbyController.restrictToCreator, lobbyController.updateLobby)
+    .delete(authController.protect, lobbyController.restrictToCreator, lobbyController.deleteLobby)
 
-router.post('/:id/join', lobbyController.joinLobby)
+router.patch('/:id/join', authController.protect, lobbyController.joinLobby)
 
 module.exports = router

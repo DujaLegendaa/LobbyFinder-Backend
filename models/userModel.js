@@ -33,12 +33,17 @@ const userSchema = new mongoose.Schema({
     },
     discordTag: { 
         type: String, 
-        required: [true, "discord tag not provided"],
         validate: {
             validator: str => { RegExp('.+#\d{4}').test(str) },
             message: 'invalid discord tag'
         },
-        unique: true
+        sparse: true
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'user'],
+        required: true,
+        default: 'user'
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
